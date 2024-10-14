@@ -14,7 +14,6 @@ Stack::Stack()
 Stack::~Stack()
 {
 	free(elements);
-	exit(1);
 }
 
 int* Stack::increaseSize()
