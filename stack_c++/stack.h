@@ -2,19 +2,27 @@
 
 class Stack {
 
+	int* increaseSize();
+	
+	void allocateForAssigment(const Stack&);
+	
+	void fillMemoryWithData(const Stack&);
+
   public:
-	
 	int* elements;
-	
+
 	int top;
-	
+
 	int size;
-	
+
 	Stack();
 
-	~Stack();
+	Stack(const Stack&);
+	
 
-	int* increaseSize();
+	Stack& operator=(const Stack&);
+
+	~Stack();
 
 	void push(int);
 

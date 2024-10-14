@@ -11,6 +11,52 @@ Stack::Stack()
 	top = -1;
 }
 
+void Stack::fillMemoryWithData(const Stack& other){
+	top = other.top;
+	for(int i = 0; i <= top; i++){
+		elements[i] = other.elements[i];
+	}
+}
+
+Stack::Stack(const Stack& other)
+{
+	size = other.size;
+	elements = (int*)malloc(sizeof(int) * size);
+	if(!elements){
+		cout << "memory allocatrion error occured";
+		exit(1);
+	}
+	fillMemoryWithData(other);
+}
+
+void Stack::allocateForAssigment(const Stack& other){
+	int* newElements = NULL;
+	size = other.size;
+	if(!other.elements){
+		free(elements);
+		elements = NULL;
+		return;
+	}
+	newElements = (int*)realloc(elements, sizeof(int) * other.size);
+	if(!newElements){
+		cout << "memory reallocation error occured";
+		exit(2);
+	}
+	elements = newElements;
+}
+
+Stack& Stack::operator=(const Stack& other){
+	if(this == &other) return *this;
+	if(size < other.size){
+		allocateForAssigment(other);
+	}
+	else if(size > other.size){
+		allocateForAssigment(other);
+	}
+	fillMemoryWithData(other);
+	return *this;
+}
+
 Stack::~Stack()
 {
 	free(elements);
@@ -21,7 +67,7 @@ int* Stack::increaseSize()
 	int* newElements;
 	if (size == INT_MAX) {
 		cout << "max size reached\n";
-		delete this;
+		exit(3);
 	}
 	else if (size > (INT_MAX - 1) / 2)
 		size = INT_MAX;
@@ -32,7 +78,7 @@ int* Stack::increaseSize()
 	newElements = (int*)realloc(elements, sizeof(int) * size);
 	if (!newElements) {
 		cout << "size increasment error occured\n";
-		delete this;
+		exit(4);
 	}
 	return newElements;
 }
@@ -56,7 +102,7 @@ int Stack::pop()
 {
 	if (isEmpty()) {
 		cout << "poping empty stack detected\n";
-		delete this;
+		exit(5);
 	}
 	top -= 1;
 	return elements[top + 1];
