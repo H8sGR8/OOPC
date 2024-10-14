@@ -1,6 +1,7 @@
 #include "stack.h"
 
 void testPush(Stack* s){
+	printf("test pushing\n");
 	int expectedList[10];
 	for(int i = 0; i < 10; i++){
 		push(s, i);
@@ -16,6 +17,7 @@ void testPush(Stack* s){
 }
 
 void testPop(Stack* s){
+	printf("\n\ntest popping\n");
 	for(int i = 9; i >= 0; i--){
 		if(i != pop(s)){
 			printf("Unsuccessful\n");
@@ -26,6 +28,7 @@ void testPop(Stack* s){
 }
 
 void testIsEmpty(Stack* s){
+	printf("\n\ntest isEmpty\n");
 	if(!isEmpty(s)){
 		printf("Unsuccessful\n");
 		return;
@@ -44,19 +47,18 @@ void testIsEmpty(Stack* s){
 }
 
 void testPopingEmptyStack(Stack* s){
-	pop(s);
+	printf("\n\ntest popping empty stack\n");
+	while(s->top >= -1){
+		pop(s);
+	}
 }
 
 int main(){
 	Stack myStack;
 	init(&myStack);
-	printf("test pushing\n");
 	testPush(&myStack);
-	printf("\n\ntest popping\n");
 	testPop(&myStack);
-	printf("\n\ntest isEmpty\n");
 	testIsEmpty(&myStack);
-	printf("\n\ntest popping empty stack\n");
 	testPopingEmptyStack(&myStack);
-	destroy(&myStack);
+	return(0);
 }

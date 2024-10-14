@@ -4,6 +4,7 @@
 
 void destroy(Stack* s){
 	free(s->elements);
+	exit(1);
 }
 
 void init(Stack* s){
