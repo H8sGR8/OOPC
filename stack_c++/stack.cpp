@@ -4,6 +4,7 @@
 #include <stdlib.h>
 using namespace std;
 
+
 Stack::Stack()
 {
 	size = 0;
@@ -33,11 +34,10 @@ void Stack::allocateForAssigment(const Stack& other){
 	int* newElements = NULL;
 	size = other.size;
 	if(!other.elements){
-		free(elements);
 		elements = NULL;
 		return;
 	}
-	newElements = (int*)realloc(elements, sizeof(int) * other.size);
+	newElements = (int*)realloc(elements, sizeof(int) * other.top);
 	if(!newElements){
 		cout << "memory reallocation error occured";
 		exit(2);
@@ -47,10 +47,7 @@ void Stack::allocateForAssigment(const Stack& other){
 
 Stack& Stack::operator=(const Stack& other){
 	if(this == &other) return *this;
-	if(size < other.size){
-		allocateForAssigment(other);
-	}
-	else if(size > other.size){
+	if(size <= other.top){
 		allocateForAssigment(other);
 	}
 	fillMemoryWithData(other);
@@ -59,7 +56,7 @@ Stack& Stack::operator=(const Stack& other){
 
 Stack::~Stack()
 {
-	free(elements);
+	if(elements) free(elements);
 }
 
 int* Stack::increaseSize()
@@ -71,10 +68,8 @@ int* Stack::increaseSize()
 	}
 	else if (size > (INT_MAX - 1) / 2)
 		size = INT_MAX;
-	else if (size == 0)
-		size = 1;
-	else
-		size *= 2;
+	else if (size == 0) size = INITIAL_SIZE;
+	else size *= 2;
 	newElements = (int*)realloc(elements, sizeof(int) * size);
 	if (!newElements) {
 		cout << "size increasment error occured\n";

@@ -1,5 +1,7 @@
 #pragma once
 
+#define INITIAL_SIZE 32
+
 class Stack {
 
 	int* increaseSize();
