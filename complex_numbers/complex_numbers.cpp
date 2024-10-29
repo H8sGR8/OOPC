@@ -130,27 +130,23 @@ double ComplexNumber::getMagnitude(){
 }
 
 double ComplexNumber::getPhase(){
-	return atan(this->imaginaryPart / this->realPart);
+	return atan2(this->imaginaryPart, this->realPart);
 }
 
 string ComplexNumber::getPhaseWithPi(){
 	double phase = getPhase();
 	string prefix = "pi/";
+	string finalDivisor = "";
 	if(phase < 0){
 		prefix = "-pi/";
 		phase *= -1;
 	}
 	string divisor = to_string(pow(phase / M_PI, -1));
 	int currentCharNumber = divisor.length() - 1;
-	while(divisor[currentCharNumber] == '0'){
-		divisor[currentCharNumber] = '\0';
-		currentCharNumber--;
-	}
-	if(currentCharNumber != (int)(divisor.length() - 1)){
-		if(divisor[currentCharNumber] == '.') divisor[currentCharNumber] = '\0';
-		else  divisor[currentCharNumber + 1] = '\0';
-	}
-	if (divisor == "-inf") return "pi";
-	else if(divisor == "inf") return "0";
-	return prefix + divisor;
+	while(divisor[currentCharNumber] == '0') currentCharNumber--;
+	if (divisor[currentCharNumber] != '.') currentCharNumber++;
+	for (int i = 0; i < currentCharNumber; i++) finalDivisor += divisor[i];
+	if (finalDivisor == "inf") return "0";
+	if (finalDivisor == "1") return "pi";
+	return prefix + finalDivisor;
 }
