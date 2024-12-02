@@ -27,12 +27,11 @@ class rangeException : public exception {
 		char* what();
 };
 
-class refMatrix{
-	public:
-		int referencesNum;
-		int rows;
-		int columns;
-		double** matrixTable;
+struct refMatrix{
+	int referencesNum;
+	int rows;
+	int columns;
+	double** matrixTable;
 };
 
 class Matrix {

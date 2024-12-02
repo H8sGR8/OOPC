@@ -102,7 +102,7 @@ void Matrix::copyFromFile(string path){
 		lines[matrix->rows - 1] = line;
 	}
 	if(matrix->rows <= 0 || matrix->columns <= 0) throw wrongDimentionsException();
-	for(uint i = 0; i < lines[0].length(); i++) if(lines[0][i] == ' ') matrix->columns++;
+	for(unsigned int i = 0; i < lines[0].length(); i++) if(lines[0][i] == ' ') matrix->columns++;
 	if (!isMatrixCorrect(lines, matrix->rows, matrix->columns)){
 		delete matrix;
 		delete[] lines;
@@ -249,7 +249,7 @@ bool isMatrixCorrect (const string* lines, int rows, int columns){
 	for(int i = 0; i < rows; i++){
 		col = 1;
 		if(lines[i].length() == 0) return false;
-		for(uint j = 0; j < lines[i].length(); j++){
+		for(unsigned int j = 0; j < lines[i].length(); j++){
 			if(lines[i][j] == ' ') col++;
 		}
 		if(col != columns) return false;
